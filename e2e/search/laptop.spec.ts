@@ -2,7 +2,6 @@ import { test, expect } from "@playwright/test";
 
 test("navigate to laptops from Computers & tablets", async ({
   page,
-  context,
   baseURL,
 }) => {
   await page.goto(baseURL!, { waitUntil: "domcontentloaded" });

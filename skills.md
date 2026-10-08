@@ -31,3 +31,15 @@ Follow these rules whenever creating tests in this repository.
 - Do not use any other element-selection API, including `getByText()`, `getByLabel()`, `getByTestId()`, `getByPlaceholder()`, `getByAltText()`, `getByTitle()`, `$()`, `$$()`, or `waitForSelector()`. Do not bypass this rule with DOM queries in `evaluate()` or selector-based page actions such as `page.click(selector)`.
 
 Apply these requirements whenever creating or modifying tests.
+
+## AI Agent Restrictions
+
+Effective immediately after this rule is added, no AI agent may modify or override `skills.md` in any way. This includes adding, editing, removing, replacing, reformatting, renaming, moving, or deleting the file or any of its contents.
+
+AI agents must not bypass this restriction through tools, scripts, formatters, generated output, delegated agents, or changes to other files intended to override these rules. If asked to change or override `skills.md`, decline that part of the request, explain that the file is protected, and continue with unrelated permitted work where possible. Changes to this file must be made manually by a human, not by an AI agent.
+
+## Failed Run Restrictions
+
+If any test, check, or command fails during an automated AI-agent run, the agent must not create a pull request or merge request.
+
+Any existing pull request or merge request associated with that failed run must be closed automatically by repository automation.

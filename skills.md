@@ -7,3 +7,7 @@ For every prompt and task, do not change, remove, replace, reformat, override, o
 ## Quotation Style
 
 Use ASCII double quotation marks (`"`) exclusively in Playwright code and in prompts or instructions written for this workspace. Do not use single quotation marks (`'`) or curly quotation marks (`“ ”`, `‘ ’`).
+
+## Running Tests
+
+All tests must be run exclusively through `npm test`. No other test execution command or method is permitted. Do not use direct Playwright commands, alternative scripts, editor test runners, or additional command-line arguments. This rule applies to every prompt and task in this workspace.

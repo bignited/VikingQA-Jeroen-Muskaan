@@ -22,4 +22,6 @@ See [skills.md](skills.md) for the repository rules.
 
 All tests must be written in TypeScript using Playwright Test and `.spec.ts` files. Follow the [official Playwright documentation](https://playwright.dev/docs/intro) and [best practices](https://playwright.dev/docs/best-practices).
 
-Select elements only with `getByRole()` or `locator()`. Prefer `getByRole()` with an accessible name. Other element-selection APIs, DOM-query workarounds, and selector-based page actions are not permitted. Use awaited actions, locator auto-waiting, and web-first assertions.
+Allow all recommended Playwright built-in locators: `getByRole()`, `getByText()`, `getByLabel()`, `getByPlaceholder()`, `getByAltText()`, `getByTitle()`, and `getByTestId()`. Follow the [official locator guidance](https://playwright.dev/docs/locators): prioritize roles, then appropriate user-facing attributes, use test IDs for explicit testing contracts, and use CSS through `locator()` only as a fallback. Playwright does not define a strict ranking among all user-facing locator APIs.
+
+Locator chaining, filtering, combining, and frame scoping are allowed. Regex and XPath remain prohibited. Legacy element-selection APIs, DOM-query workarounds, and selector-based page actions are not permitted. Use awaited actions, locator auto-waiting, and web-first assertions. See the locator priorities in [skills.md](skills.md).

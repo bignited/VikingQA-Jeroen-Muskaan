@@ -25,12 +25,23 @@ Follow these rules whenever creating tests in this repository.
 
 - Write all tests in TypeScript using Playwright Test and `.spec.ts` files.
 - Follow the [official Playwright documentation](https://playwright.dev/docs/intro) and [best practices](https://playwright.dev/docs/best-practices), including awaited actions, locator auto-waiting, and web-first assertions.
-- Select elements exclusively with `getByRole()` or `locator()`, including when chaining selectors. Prefer `getByRole()` with an accessible name; use `locator()` when role-based selection is not suitable.
+- Allow all recommended Playwright built-in locators: `getByRole()`, `getByText()`, `getByLabel()`, `getByPlaceholder()`, `getByAltText()`, `getByTitle()`, and `getByTestId()`, including their chained and frame-scoped equivalents. Follow the locator priorities below.
 - Regular expressions and XPath are strictly prohibited for element selection, with no exceptions. Do not use regex literals or `RegExp` objects in locators, accessible-name matching, or locator filters. Use literal strings instead.
 - Never use explicit XPath selectors such as `xpath=...` or implicit XPath expressions such as `//...`, `.//...`, or `..`. When using `locator()` with a selector string, use CSS selectors only. Do not bypass these restrictions through chained locators, filters, helper functions, or custom selector engines.
-- Do not use any other element-selection API, including `getByText()`, `getByLabel()`, `getByTestId()`, `getByPlaceholder()`, `getByAltText()`, `getByTitle()`, `$()`, `$$()`, or `waitForSelector()`. Do not bypass this rule with DOM queries in `evaluate()` or selector-based page actions such as `page.click(selector)`.
+- Use locator-based actions rather than legacy element-selection APIs such as `$()`, `$$()`, or `waitForSelector()`. Do not bypass locators with DOM queries in `evaluate()` or selector-based page actions such as `page.click(selector)`.
 
 Apply these requirements whenever creating or modifying tests.
+
+## Locator Priority
+
+Follow the [official Playwright locator guidance](https://playwright.dev/docs/locators). Playwright prioritizes role locators, user-facing attributes, and explicit testing contracts; it does not define a strict total ordering for every locator API. Apply these priority tiers based on the target element:
+
+1. Prefer `getByRole()` with an accessible name, especially for interactive elements.
+2. Use the appropriate user-facing locator: `getByLabel()` for labeled form controls, `getByPlaceholder()` for inputs without labels, `getByText()` for non-interactive text, `getByAltText()` for images, or `getByTitle()` for elements with a title attribute. These are context-dependent alternatives, not a fixed ranking within this tier.
+3. Use `getByTestId()` when user-facing locators are unsuitable or an explicit test-ID contract is the chosen testing methodology.
+4. Use `locator()` with a concise CSS selector only when the recommended built-in locators are unsuitable. Avoid selectors tied to long DOM paths or fragile styling classes.
+
+Locator chaining, `filter()`, `and()`, `or()`, and `frameLocator()` are allowed to scope or combine locators. Prefer unique matches; use `first()`, `last()`, or `nth()` only when element order is intentional, not to hide ambiguous selectors. The regex and XPath prohibitions still apply to every locator and filter.
 
 ## AI Agent Restrictions
 

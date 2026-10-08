@@ -42,6 +42,17 @@ Follow these rules whenever creating tests in this repository.
 
 Apply these requirements whenever creating or modifying tests.
 
+## Playwright Workflow
+
+- Prefer simple, readable Playwright code and built-in locators, actions, auto-waiting, and web-first assertions over custom abstractions or manual polling.
+- Use `click()`, `fill()`, `press()`, `selectOption()`, `check()`, `uncheck()`, and `hover()` for user interactions. After an action, assert or wait for the specific resulting UI state rather than adding a delay.
+- Use `page.goto()` for direct navigation. Tests must still follow the repository's required starting state: clear cookies, open the configured homepage, and accept cookies before test-specific actions. When navigation follows an action, rely on Playwright's normal navigation waiting behavior and verify the intended destination or resulting UI.
+- Await relevant Playwright operations and keep asynchronous control flow straightforward. Do not assume an action or assertion has completed before awaiting it.
+- Let useful Playwright errors and failed assertions propagate. Catch an error only when the test can meaningfully recover; add custom messages only when they provide context not already present in the failure.
+- Keep test functions and helpers focused on one user-level action or workflow. Keep selectors beside the actions that use them; extract a helper only when an interaction is genuinely reused. Do not create a page-object abstraction for a one-off interaction.
+- Reuse the provided `page`, context, and browser objects. Keep function inputs small and avoid passing page objects or configuration that the function does not need.
+- Return nothing for a pure action, a string or value for one extracted result, or an object only when multiple related values are needed. Do not return locators or Playwright objects unless the caller explicitly needs them.
+
 ## No Fixed Delays
 
 - Never use hard waits or fixed delays in Playwright test scripts, hooks, fixtures, or shared test helpers. This includes `setTimeout()`, promise-wrapped timers, `page.waitForTimeout()`, `setInterval()` polling loops, and sleep or delay utilities.

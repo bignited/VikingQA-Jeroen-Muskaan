@@ -43,3 +43,7 @@ AI agents must not bypass this restriction through tools, scripts, formatters, g
 If any test, check, or command fails during an automated AI-agent run, the agent must not create a pull request or merge request.
 
 Any existing pull request or merge request associated with that failed run must be closed automatically by repository automation.
+
+## Test Starting State
+
+Every test must clear cookies, start from the homepage using the configured `baseURL`, and click "Accept everything" before any test-specific actions. Do not start from deep links or bypass cookie acceptance.

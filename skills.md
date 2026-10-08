@@ -11,3 +11,23 @@ Use ASCII double quotation marks (`"`) exclusively in Playwright code and in pro
 ## Running Tests
 
 All tests must be run exclusively through `npm test`. No other test execution command or method is permitted. Do not use direct Playwright commands, alternative scripts, editor test runners, or additional command-line arguments. This rule applies to every prompt and task in this workspace.
+
+## Test Organization
+
+- Every test must live in a functional folder under `e2e/`, grouped by the feature being tested.
+- All filter tests must live in `e2e/search/`.
+- Test filenames must start with the search output or product being tested and end with `.spec.ts`.
+- For example, tests for laptop search results or filters belong in `e2e/search/laptop.spec.ts`.
+
+Follow these rules whenever creating tests in this repository.
+
+## Test Implementation
+
+- Write all tests in TypeScript using Playwright Test and `.spec.ts` files.
+- Follow the [official Playwright documentation](https://playwright.dev/docs/intro) and [best practices](https://playwright.dev/docs/best-practices), including awaited actions, locator auto-waiting, and web-first assertions.
+- Select elements exclusively with `getByRole()` or `locator()`, including when chaining selectors. Prefer `getByRole()` with an accessible name; use `locator()` when role-based selection is not suitable.
+- Regular expressions and XPath are strictly prohibited for element selection, with no exceptions. Do not use regex literals or `RegExp` objects in locators, accessible-name matching, or locator filters. Use literal strings instead.
+- Never use explicit XPath selectors such as `xpath=...` or implicit XPath expressions such as `//...`, `.//...`, or `..`. When using `locator()` with a selector string, use CSS selectors only. Do not bypass these restrictions through chained locators, filters, helper functions, or custom selector engines.
+- Do not use any other element-selection API, including `getByText()`, `getByLabel()`, `getByTestId()`, `getByPlaceholder()`, `getByAltText()`, `getByTitle()`, `$()`, `$$()`, or `waitForSelector()`. Do not bypass this rule with DOM queries in `evaluate()` or selector-based page actions such as `page.click(selector)`.
+
+Apply these requirements whenever creating or modifying tests.

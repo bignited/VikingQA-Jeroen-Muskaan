@@ -12,6 +12,15 @@ Use ASCII double quotation marks (`"`) exclusively in Playwright code and in pro
 
 All tests must be run exclusively through `npm test`. No other test execution command or method is permitted. Do not use direct Playwright commands, alternative scripts, editor test runners, or additional command-line arguments. This rule applies to every prompt and task in this workspace.
 
+## Existing Tooling Only
+
+AI agents must use the packages and execution scripts already present in this project. They must never add extra packages or scripts to run commands.
+
+- Do not add dependencies or development dependencies, install additional packages locally or globally, or download temporary packages through tools such as `npx` or `npm exec`.
+- Do not add or repurpose package scripts, lifecycle hooks, shell scripts, helper executables, or editor tasks to introduce alternative command runners or bypass the existing workflow.
+- Do not change package manifests or lockfiles to introduce additional tooling. Tests must continue to run exclusively through the existing `npm test` script.
+- If a task cannot be completed with the existing project tooling, report the limitation rather than installing packages or creating execution scripts. Do not bypass these restrictions through generated files or delegated agents.
+
 ## Test Organization
 
 - Every test must live in a functional folder under `e2e/`, grouped by the feature being tested.

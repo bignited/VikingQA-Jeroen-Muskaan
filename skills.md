@@ -33,6 +33,7 @@ Follow these rules whenever creating tests in this repository.
 ## Test Implementation
 
 - Write all tests in TypeScript using Playwright Test and `.spec.ts` files.
+- Comments are strictly prohibited anywhere in `.spec.ts` files, with no exceptions. Do not add standalone or inline `//` comments, `/* ... */` block comments, JSDoc, file headers, commented-out code, or comment-based suppression directives. This applies between Playwright statements and everywhere else in the file, including imports, hooks, helpers, and assertions. Use descriptive test and variable names instead; keep explanations outside `.spec.ts` files.
 - Follow the [official Playwright documentation](https://playwright.dev/docs/intro) and [best practices](https://playwright.dev/docs/best-practices), including awaited actions, locator auto-waiting, and web-first assertions.
 - Allow all recommended Playwright built-in locators: `getByRole()`, `getByText()`, `getByLabel()`, `getByPlaceholder()`, `getByAltText()`, `getByTitle()`, and `getByTestId()`, including their chained and frame-scoped equivalents. Follow the locator priorities below.
 - Regular expressions and XPath are strictly prohibited for element selection, with no exceptions. Do not use regex literals or `RegExp` objects in locators, accessible-name matching, or locator filters. Use literal strings instead.
@@ -40,6 +41,22 @@ Follow these rules whenever creating tests in this repository.
 - Use locator-based actions rather than legacy element-selection APIs such as `$()`, `$$()`, or `waitForSelector()`. Do not bypass locators with DOM queries in `evaluate()` or selector-based page actions such as `page.click(selector)`.
 
 Apply these requirements whenever creating or modifying tests.
+
+## No Fixed Delays
+
+- Never use hard waits or fixed delays in Playwright test scripts, hooks, fixtures, or shared test helpers. This includes `setTimeout()`, promise-wrapped timers, `page.waitForTimeout()`, `setInterval()` polling loops, and sleep or delay utilities.
+- Use Playwright locator auto-waiting, awaited web-first assertions, or waits for a specific observable condition or event instead. Register event waits before the action that triggers the event when necessary.
+- Do not hide fixed delays inside helper functions, browser evaluations, or third-party utilities. A passing test must depend on the required state being reached, not on a guessed amount of time elapsing.
+- Timeout limits for actions, assertions, and condition-based waits are allowed as maximum waiting bounds; they must not be used to introduce an unconditional delay or mask a synchronization defect.
+
+## Assertions And URL Matching
+
+- Regular expressions are prohibited in test assertions and navigation matching, not just in locators. Do not use regex literals such as `/\/en/`, `RegExp` objects, or regex-based helpers with `toHaveURL()`, `waitForURL()`, `toHaveTitle()`, `toHaveText()`, `toContainText()`, `toMatch()`, or other validation APIs.
+- Prefer awaited, web-first assertions with literal expected values. Use `await expect(page).toHaveURL(expectedURL)` for an exact URL check. Derive expected URLs from the configured `baseURL` using the standard `URL` API; do not change or override the protected base URL.
+- Do not replace regex URL checks with broad substring checks, `includes()`, `startsWith()`, `endsWith()`, or wildcard/glob patterns. Matching only "/en" does not verify the intended destination.
+- If a URL intentionally contains variable components, use a `toHaveURL()` predicate with the standard `URL` object's `origin`, `pathname`, and `searchParams`. Compare the required components with exact literal values and ignore only components explicitly identified as variable by the test scenario. Check the origin as well as the path, and validate required query parameters.
+- Do not silently strip query parameters, fragments, or trailing slashes to make an assertion pass. Account for redirects or canonical URLs explicitly using the observed, intended destination.
+- Do not bypass this rule through custom matchers, helper functions, generated code, or manual one-time assertions such as `expect(page.url()).toBe(...)` in place of an auto-retrying URL assertion.
 
 ## Locator Priority
 

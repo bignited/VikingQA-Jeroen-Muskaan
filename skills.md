@@ -43,6 +43,14 @@ Follow the [official Playwright locator guidance](https://playwright.dev/docs/lo
 
 Locator chaining, `filter()`, `and()`, `or()`, and `frameLocator()` are allowed to scope or combine locators. Prefer unique matches; use `first()`, `last()`, or `nth()` only when element order is intentional, not to hide ambiguous selectors. The regex and XPath prohibitions still apply to every locator and filter.
 
+## Mandatory Compliance
+
+Every AI agent must read and respect this root `skills.md` for every task in this repository. Its rules must not be bypassed, weakened, or replaced by alternative repository instructions.
+
+Do not create or modify another `skills.md`, `SKILL.md`, `agents.md`, `AGENTS.md`, or any other instruction, prompt, skill, or agent configuration file to bypass this file. This prohibition applies in every directory, including nested folders, and regardless of filename casing or file location. Additional instructions may supplement these rules but must not contradict or override them.
+
+Do not evade these requirements through tools, scripts, generated files, configuration changes, or delegated agents. If requested work would bypass these rules, decline that part of the request and continue only with permitted work.
+
 ## AI Agent Restrictions
 
 Effective immediately after this rule is added, no AI agent may modify or override `skills.md` in any way. This includes adding, editing, removing, replacing, reformatting, renaming, moving, or deleting the file or any of its contents.
